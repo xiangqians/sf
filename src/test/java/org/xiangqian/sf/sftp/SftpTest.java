@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.xiangqian.sf.sftp.impl.jsch.JschSftpImpl;
-import org.xiangqian.sf.ssh.Server;
 
 import java.time.Duration;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  * @date 01:17 2022/07/24
  */
 @Slf4j
-public class JschSftpTest {
+public class SftpTest {
 
     public static void main(String[] args) throws Exception {
 //        put();
@@ -24,7 +23,7 @@ public class JschSftpTest {
     public static void get() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = getSftp();
+            sftp = SftpFactory.create(JschSftpImpl.class);
             sftp.cd("./tmp", Duration.ofSeconds(10));
             ls(sftp);
 
@@ -37,7 +36,7 @@ public class JschSftpTest {
     public static void put() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = getSftp();
+            sftp = SftpFactory.create(JschSftpImpl.class);
             sftp.cd("./tmp", Duration.ofSeconds(10));
             ls(sftp);
 
@@ -53,7 +52,7 @@ public class JschSftpTest {
     public void ls() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = getSftp();
+            sftp = SftpFactory.create(JschSftpImpl.class);
 
             // ls
             ls(sftp);
@@ -84,11 +83,6 @@ public class JschSftpTest {
         List<FileEntry> list = sftp.ls(path, Duration.ofSeconds(10));
         list.forEach(System.out::println);
         System.out.println();
-    }
-
-    private static Sftp getSftp() throws Exception {
-        Server server = Server.get();
-        return new JschSftpImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
     }
 
 }

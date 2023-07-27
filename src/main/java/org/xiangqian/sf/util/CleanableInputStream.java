@@ -42,7 +42,7 @@ public class CleanableInputStream extends InputStream implements Runnable { // è
 
     @Override
     public void close() throws IOException {
-        IOUtils.closeQuietly(closeable, in);
+        IOUtils.closeQuietly(in, closeable);
     }
 
     @SneakyThrows

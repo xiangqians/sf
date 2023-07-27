@@ -19,7 +19,7 @@ import java.time.Duration;
  */
 public abstract class SshjSupport implements Closeable {
 
-    private SSHClient sshClient;
+    protected SSHClient sshClient;
     protected Session session;
 
     /**

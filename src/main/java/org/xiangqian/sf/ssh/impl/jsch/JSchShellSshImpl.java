@@ -17,7 +17,7 @@ import java.time.Duration;
 @Slf4j
 public class JschShellSshImpl extends JschSupport implements Ssh {
 
-    protected JschShellSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
+    public JschShellSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         super(host, port, user, passwd, timeout);
         throw new UnsupportedOperationException();
     }
