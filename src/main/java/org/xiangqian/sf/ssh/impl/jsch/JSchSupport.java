@@ -14,6 +14,10 @@ import java.util.Objects;
 /**
  * JSch
  * http://www.jcraft.com/jsch/
+ * https://github.com/is/jsch
+ * <p>
+ * 第三方JSch（第三方维护的版本）
+ * https://github.com/mwiede/jsch
  *
  * @author xiangqian
  * @date 13:50 2022/07/23
@@ -32,10 +36,10 @@ public abstract class JschSupport implements Closeable {
      * @param timeout 连接超时时间
      */
     protected JschSupport(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
-        JSch jSch = new JSch();
+        JSch jsch = new JSch();
 
         // 设置服务器地址、端口、用户名、密码
-        session = jSch.getSession(user, host, port);
+        session = jsch.getSession(user, host, port);
         session.setPassword(passwd);
 
         // 跳过公钥检测

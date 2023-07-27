@@ -1,6 +1,5 @@
-package org.xiangqian.sf.ssh.impl.jsch;
+package org.xiangqian.sf.util;
 
-import com.jcraft.jsch.Channel;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -10,18 +9,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
+ * 可清除输入流
+ *
  * @author xiangqian
  * @date 11:40 2023/07/27
  */
 @Slf4j
-public class JschInputStream extends InputStream implements Runnable { // 设计有一个回收线程
+public class CleanableInputStream extends InputStream implements Runnable { // 设计有一个回收线程
 
-    private Channel channel;
     private InputStream in;
+    private Closeable closeable;
 
-    public JschInputStream(Channel channel, InputStream in) {
-        this.channel = channel;
+    private CleanableInputStream(InputStream in, Closeable closeable) {
         this.in = in;
+        this.closeable = closeable;
     }
 
     @Override
@@ -41,14 +42,7 @@ public class JschInputStream extends InputStream implements Runnable { // 设计
 
     @Override
     public void close() throws IOException {
-        if (Objects.nonNull(channel)) {
-            channel.disconnect();
-            channel = null;
-        }
-        if (Objects.nonNull(in)) {
-            IOUtils.closeQuietly(in);
-            in = null;
-        }
+        IOUtils.closeQuietly(closeable, in);
     }
 
     @SneakyThrows
@@ -74,6 +68,12 @@ public class JschInputStream extends InputStream implements Runnable { // 设计
     public void run() {
         log.debug("Cleaner触发清除");
         close();
+    }
+
+    public static CleanableInputStream create(InputStream in, Closeable closeable) {
+        CleanableInputStream cleanableIn = new CleanableInputStream(in, closeable);
+        new Cleaner(cleanableIn);
+        return cleanableIn;
     }
 
 }

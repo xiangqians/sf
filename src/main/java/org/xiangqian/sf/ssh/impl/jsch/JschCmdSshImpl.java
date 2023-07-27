@@ -8,7 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.xiangqian.sf.ssh.Ssh;
 import org.xiangqian.sf.util.Assert;
-import org.xiangqian.sf.util.Cleaner;
+import org.xiangqian.sf.util.CleanableInputStream;
 
 import java.io.InputStream;
 import java.time.Duration;
@@ -21,9 +21,9 @@ import java.util.Objects;
  * @date 13:11 2022/07/23
  */
 @Slf4j
-public class JschExecSshImpl extends JschSupport implements Ssh {
+public class JschCmdSshImpl extends JschSupport implements Ssh {
 
-    public JschExecSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
+    public JschCmdSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         super(host, port, user, passwd, timeout);
     }
 
@@ -55,14 +55,12 @@ public class JschExecSshImpl extends JschSupport implements Ssh {
             channel.connect();
             Assert.isTrue(channel.isConnected(), "channel连接失败");
 
-            JschInputStream jSchIn = new JschInputStream(channel, in);
-            new Cleaner(jSchIn);
-            return jSchIn;
+            return CleanableInputStream.create(in, channel::disconnect);
         } catch (Exception e) {
+            IOUtils.closeQuietly(in);
             if (Objects.nonNull(channel)) {
                 channel.disconnect();
             }
-            IOUtils.closeQuietly(in);
             throw e;
         }
     }

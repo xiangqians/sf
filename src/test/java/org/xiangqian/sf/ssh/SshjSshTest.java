@@ -1,19 +1,19 @@
 package org.xiangqian.sf.ssh;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
+import net.schmizz.sshj.common.IOUtils;
 import org.junit.Test;
-import org.xiangqian.sf.ssh.impl.jsch.JschCmdSshImpl;
+import org.xiangqian.sf.ssh.impl.sshj.SshjCmdSshImpl;
 
 import java.io.InputStream;
 import java.time.Duration;
 
 /**
  * @author xiangqian
- * @date 14:00 2022/07/23
+ * @date 23:26 2023/07/27
  */
 @Slf4j
-public class JschSshTest {
+public class SshjSshTest {
 
     @Test
     public void exec() throws Exception {
@@ -21,7 +21,7 @@ public class JschSshTest {
         Ssh ssh = null;
         InputStream in = null;
         try {
-            ssh = new JschCmdSshImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
+            ssh = new SshjCmdSshImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
             in = ssh.exec("ls -l", Duration.ofSeconds(10));
             log.debug("\n{}", in);
             System.gc();
