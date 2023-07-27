@@ -15,9 +15,9 @@ import java.time.Duration;
  * @date 22:37 2022/07/25
  */
 @Slf4j
-public class JSchShellSshImpl extends JSchSupport implements Ssh {
+public class JschShellSshImpl extends JschSupport implements Ssh {
 
-    protected JSchShellSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
+    protected JschShellSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         super(host, port, user, passwd, timeout);
     }
 

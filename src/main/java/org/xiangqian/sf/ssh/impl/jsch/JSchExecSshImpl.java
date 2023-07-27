@@ -21,9 +21,9 @@ import java.util.Objects;
  * @date 13:11 2022/07/23
  */
 @Slf4j
-public class JSchExecSshImpl extends JSchSupport implements Ssh {
+public class JschExecSshImpl extends JschSupport implements Ssh {
 
-    public JSchExecSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
+    public JschExecSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         super(host, port, user, passwd, timeout);
     }
 
@@ -55,7 +55,7 @@ public class JSchExecSshImpl extends JSchSupport implements Ssh {
             channel.connect();
             Assert.isTrue(channel.isConnected(), "channel连接失败");
 
-            JSchInputStream jSchIn = new JSchInputStream(channel, in);
+            JschInputStream jSchIn = new JschInputStream(channel, in);
             new Cleaner(jSchIn);
             return jSchIn;
         } catch (Exception e) {

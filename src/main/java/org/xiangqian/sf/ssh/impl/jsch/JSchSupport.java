@@ -18,7 +18,7 @@ import java.util.Objects;
  * @author xiangqian
  * @date 13:50 2022/07/23
  */
-public abstract class JSchSupport implements Closeable {
+public abstract class JschSupport implements Closeable {
 
     protected Session session;
 
@@ -31,7 +31,7 @@ public abstract class JSchSupport implements Closeable {
      * @param passwd  密码
      * @param timeout 连接超时时间
      */
-    protected JSchSupport(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
+    protected JschSupport(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         JSch jSch = new JSch();
 
         // 设置服务器地址、端口、用户名、密码

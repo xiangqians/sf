@@ -3,7 +3,7 @@ package org.xiangqian.sf.sftp;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.xiangqian.sf.sftp.impl.jsch.JSchSftpImpl;
+import org.xiangqian.sf.sftp.impl.jsch.JschSftpImpl;
 import org.xiangqian.sf.ssh.Server;
 
 import java.time.Duration;
@@ -14,7 +14,7 @@ import java.util.List;
  * @date 01:17 2022/07/24
  */
 @Slf4j
-public class JSchSftpTest {
+public class JschSftpTest {
 
     public static void main(String[] args) throws Exception {
 //        put();
@@ -88,7 +88,7 @@ public class JSchSftpTest {
 
     private static Sftp getSftp() throws Exception {
         Server server = Server.get();
-        return new JSchSftpImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
+        return new JschSftpImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
     }
 
 }

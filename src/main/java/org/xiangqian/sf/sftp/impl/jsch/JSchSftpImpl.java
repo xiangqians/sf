@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.xiangqian.sf.sftp.FileEntry;
 import org.xiangqian.sf.sftp.Sftp;
 import org.xiangqian.sf.ssh.impl.jsch.ChannelType;
-import org.xiangqian.sf.ssh.impl.jsch.JSchSupport;
+import org.xiangqian.sf.ssh.impl.jsch.JschSupport;
 import org.xiangqian.sf.util.Assert;
 
 import java.io.IOException;
@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
  * @date 01:13 2022/07/24
  */
 @Slf4j
-public class JSchSftpImpl extends JSchSupport implements Sftp {
+public class JschSftpImpl extends JschSupport implements Sftp {
 
     private ChannelSftp channel;
 
-    public JSchSftpImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
+    public JschSftpImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         super(host, port, user, passwd, timeout);
 
         // ChannelSftp上传、下载文件

@@ -20,7 +20,7 @@
 // * @author xiangqian
 // * @date 13:50 2022/07/23
 // */
-//public abstract class JSchSupportBak implements Closeable {
+//public abstract class JschSupportBak implements Closeable {
 //
 
 //

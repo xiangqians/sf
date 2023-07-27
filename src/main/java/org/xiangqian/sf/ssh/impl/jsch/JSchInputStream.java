@@ -14,12 +14,12 @@ import java.util.Objects;
  * @date 11:40 2023/07/27
  */
 @Slf4j
-public class JSchInputStream extends InputStream implements Runnable { // 设计有一个回收线程
+public class JschInputStream extends InputStream implements Runnable { // 设计有一个回收线程
 
     private Channel channel;
     private InputStream in;
 
-    public JSchInputStream(Channel channel, InputStream in) {
+    public JschInputStream(Channel channel, InputStream in) {
         this.channel = channel;
         this.in = in;
     }
