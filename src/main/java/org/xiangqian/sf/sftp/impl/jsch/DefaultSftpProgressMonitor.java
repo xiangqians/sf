@@ -4,7 +4,6 @@ import com.jcraft.jsch.SftpProgressMonitor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Map;
 
 /**
@@ -19,7 +18,6 @@ public class DefaultSftpProgressMonitor implements SftpProgressMonitor {
     private static final Map<Integer, String> OP_MAP = Map.of(PUT, "PUT", GET, "GET");
     private long totalSize;
     private long transferredSize;
-    private DecimalFormat format;
 
     public DefaultSftpProgressMonitor() {
     }
@@ -27,9 +25,8 @@ public class DefaultSftpProgressMonitor implements SftpProgressMonitor {
     @Override
     public void init(int op, String src, String dest, long max) {
         System.out.println("Start transferring files ...");
-        format = new DecimalFormat("###,###,###.##");
         totalSize = max;
-        System.out.format("[%s] %s (%s) -> %s",
+        System.out.format("%s %s (%s) -> %s",
                 OP_MAP.get(op),
                 src,
                 humanizFileSize(totalSize),

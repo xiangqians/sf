@@ -17,20 +17,33 @@ import java.util.List;
 public class JSchSftpTest {//implements Closeable {
 
     public static void main(String[] args) throws Exception {
-        put();
+//        put();
+        get();
     }
 
-    public static void put() throws Exception {
-        Server server = Server.get();
+    public static void get() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = new JSchSftpImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
+            sftp = getSftp();
             sftp.cd("./tmp", Duration.ofSeconds(10));
             ls(sftp);
 
-            sftp.put("E:\\tmp\\TeamViewer.zip", "./", Duration.ofSeconds(10));
+            sftp.get("./apache-skywalking-apm-bin.zip", "C:\\Users\\xiangqian\\Desktop\\tmp\\sf", Duration.ofSeconds(10));
+        } finally {
+            IOUtils.closeQuietly(sftp);
+        }
+    }
+
+    public static void put() throws Exception {
+        Sftp sftp = null;
+        try {
+            sftp = getSftp();
+            sftp.cd("./tmp", Duration.ofSeconds(10));
             ls(sftp);
 
+//            sftp.put("E:\\tmp\\TeamViewer.zip", "./", Duration.ofSeconds(10));
+            sftp.put("C:\\Users\\xiangqian\\Desktop\\tmp\\apache-skywalking-apm-bin.zip", "./", Duration.ofSeconds(10));
+            ls(sftp);
         } finally {
             IOUtils.closeQuietly(sftp);
         }
@@ -38,10 +51,9 @@ public class JSchSftpTest {//implements Closeable {
 
     @Test
     public void ls() throws Exception {
-        Server server = Server.get();
         Sftp sftp = null;
         try {
-            sftp = new JSchSftpImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
+            sftp = getSftp();
 
             // ls
             ls(sftp);
@@ -72,6 +84,11 @@ public class JSchSftpTest {//implements Closeable {
         List<FileEntry> list = sftp.ls(path, Duration.ofSeconds(10));
         list.forEach(System.out::println);
         System.out.println();
+    }
+
+    private static Sftp getSftp() throws Exception {
+        Server server = Server.get();
+        return new JSchSftpImpl(server.getHost(), server.getPort(), server.getUser(), server.getPasswd(), server.getTimeout());
     }
 
 //    private Sftp sftp;

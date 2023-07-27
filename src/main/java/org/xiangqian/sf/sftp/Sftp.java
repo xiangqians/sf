@@ -42,7 +42,7 @@ public interface Sftp extends Closeable {
     void mkdir(String path, Duration timeout) throws Exception;
 
     /**
-     * 删除文件
+     * 删除普通文件、目录文件等等
      *
      * @param path
      * @param timeout 执行命令超时时间
