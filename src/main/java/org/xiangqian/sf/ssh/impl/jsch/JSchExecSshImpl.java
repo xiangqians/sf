@@ -1,5 +1,6 @@
 package org.xiangqian.sf.ssh.impl.jsch;
 
+import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSchException;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,14 @@ public class JSchExecSshImpl extends JSchSupport implements Ssh {
             channel.setCommand(cmd);
 
             // 连接并执行命令
-            channel.connect((int) timeout.toMillis());
+            // 设置com.jcraft.jsch.Channel.sendChannelOpen
+            /**
+             * {@link Channel#sendChannelOpen()}
+             * 设置指定时间，会导致 retry = 1，默认是 retry = 2000
+             * 所以，此处便不设置channel timeout
+             */
+//            channel.connect((int) timeout.toMillis());
+            channel.connect();
             Assert.isTrue(channel.isConnected(), "channel连接失败");
 
             JSchInputStream jSchIn = new JSchInputStream(channel, in);

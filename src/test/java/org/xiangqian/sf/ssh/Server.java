@@ -20,7 +20,7 @@ public class Server {
     private Duration timeout;
 
     public static Server get() throws FileNotFoundException {
-        Yaml yaml = new Yaml("E:\\tmp\\test\\server.yml");
+        Yaml yaml = new Yaml("C:\\Users\\xiangqian\\Desktop\\tmp\\sf\\server.yml");
         Server server = new Server();
         server.setHost(yaml.getString("server1.host"));
         server.setPort(yaml.getInt("server1.port"));

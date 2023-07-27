@@ -47,7 +47,7 @@ public class JSchSftpTest {//implements Closeable {
             ls(sftp);
 
             // cd
-            sftp.cd("./temp", Duration.ofSeconds(10));
+            sftp.cd("./tmp", Duration.ofSeconds(10));
             ls(sftp);
 
             // mkdir
