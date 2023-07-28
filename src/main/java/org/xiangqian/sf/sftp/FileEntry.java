@@ -56,7 +56,7 @@ public class FileEntry {
     private String group;
 
     // 文件大小
-    private String size;
+    private long size;
 
     // 最后修改时间
     private String lastModifiedDate;
@@ -85,7 +85,7 @@ public class FileEntry {
         fileEntry.setCount(NumberUtils.toInt(array[1], -1));
         fileEntry.setOwner(array[2]);
         fileEntry.setGroup(array[3]);
-        fileEntry.setSize(array[4]);
+        fileEntry.setSize(NumberUtils.toLong(array[4]));
         fileEntry.setLastModifiedDate(StringUtils.join(array, " ", 5, 8));
         fileEntry.setName(array[8]);
         return fileEntry;

@@ -2,6 +2,7 @@ package org.xiangqian.sf.sftp;
 
 import java.io.Closeable;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.Duration;
 import java.util.List;
 
@@ -54,12 +55,23 @@ public interface Sftp extends Closeable {
      * 上传文件
      *
      * @param src     本地源文件
-     * @param dst     远程服务器源文件
+     * @param dst     远程服务器目标文件
      * @param timeout 执行命令超时时间
      * @return
      * @throws Exception
      */
     InputStream put(String src, String dst, Duration timeout) throws Exception;
+
+    /**
+     * 上传文件
+     *
+     * @param src     本地源输入流
+     * @param dst     远程服务器目标文件
+     * @param timeout 执行命令超时时间
+     * @return
+     * @throws Exception
+     */
+    InputStream put(InputStream src, String dst, Duration timeout) throws Exception;
 
     /**
      * 下载文件
@@ -71,5 +83,16 @@ public interface Sftp extends Closeable {
      * @throws Exception
      */
     InputStream get(String src, String dst, Duration timeout) throws Exception;
+
+    /**
+     * 下载文件
+     *
+     * @param src     远程服务器源文件
+     * @param dst     本地目标输出流
+     * @param timeout 执行命令超时时间
+     * @return
+     * @throws Exception
+     */
+    InputStream get(String src, OutputStream dst, Duration timeout) throws Exception;
 
 }

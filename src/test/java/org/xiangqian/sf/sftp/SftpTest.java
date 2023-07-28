@@ -3,7 +3,8 @@ package org.xiangqian.sf.sftp;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.xiangqian.sf.sftp.impl.jsch.JschSftpImpl;
+import org.xiangqian.sf.AbsTest;
+import org.xiangqian.sf.ssh.Server;
 
 import java.time.Duration;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * @date 01:17 2022/07/24
  */
 @Slf4j
-public class SftpTest {
+public class SftpTest extends AbsTest {
 
     public static void main(String[] args) throws Exception {
 //        put();
@@ -23,7 +24,7 @@ public class SftpTest {
     public static void get() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = SftpFactory.create(JschSftpImpl.class);
+            sftp = getSftp(SftpType.SSHJ);
             sftp.cd("./tmp", Duration.ofSeconds(10));
             ls(sftp);
 
@@ -36,7 +37,7 @@ public class SftpTest {
     public static void put() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = SftpFactory.create(JschSftpImpl.class);
+            sftp = getSftp(SftpType.SSHJ);
             sftp.cd("./tmp", Duration.ofSeconds(10));
             ls(sftp);
 
@@ -49,10 +50,10 @@ public class SftpTest {
     }
 
     @Test
-    public void ls() throws Exception {
+    public void ls1() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = SftpFactory.create(JschSftpImpl.class);
+            sftp = getSftp(SftpType.SSHJ);
 
             // ls
             ls(sftp);
@@ -75,6 +76,17 @@ public class SftpTest {
         }
     }
 
+    @Test
+    public void ls() throws Exception {
+        Sftp sftp = null;
+        try {
+            sftp = getSftp(SftpType.SSHJ);
+            ls(sftp);
+        } finally {
+            IOUtils.closeQuietly(sftp);
+        }
+    }
+
     private static void ls(Sftp sftp) throws Exception {
         ls(sftp, "./");
     }
@@ -83,6 +95,18 @@ public class SftpTest {
         List<FileEntry> list = sftp.ls(path, Duration.ofSeconds(10));
         list.forEach(System.out::println);
         System.out.println();
+    }
+
+    public static Sftp getSftp(SftpType type) throws Exception {
+        Server server = Server.get();
+        String host = server.getHost();
+        int port = server.getPort();
+        String user = server.getUser();
+        String passwd = server.getPasswd();
+        Duration timeout = server.getTimeout();
+        Sftp sftp = SftpFactory.get(type, host, port, user, passwd, timeout);
+        log.debug("sftp impl: {}", sftp.getClass());
+        return sftp;
     }
 
 }

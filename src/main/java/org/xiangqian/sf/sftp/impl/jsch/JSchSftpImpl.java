@@ -11,6 +11,7 @@ import org.xiangqian.sf.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -71,8 +72,21 @@ public class JschSftpImpl extends JschSupport implements Sftp {
     }
 
     @Override
+    public InputStream put(InputStream src, String dst, Duration timeout) throws Exception {
+        channel.put(src, dst, new DefaultSftpProgressMonitor(), FileTransferMode.OVERWRITE.getValue());
+        return null;
+    }
+
+    @Override
     public InputStream get(String src, String dst, Duration timeout) throws Exception {
         channel.get(src, dst, new DefaultSftpProgressMonitor(), FileTransferMode.OVERWRITE.getValue());
+        return null;
+    }
+
+    @Override
+    public InputStream get(String src, OutputStream dst, Duration timeout) throws Exception {
+        long skip = 0L;
+        channel.get(src, dst, new DefaultSftpProgressMonitor(), FileTransferMode.OVERWRITE.getValue(), skip);
         return null;
     }
 

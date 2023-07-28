@@ -22,15 +22,17 @@ public class Yaml {
     }
 
     public Yaml(File file) throws FileNotFoundException {
-        this(new FileInputStream(file));
+        this(new FileInputStream(file), true);
     }
 
-    public Yaml(InputStream in) {
+    public Yaml(InputStream in, boolean close) {
         try {
             org.yaml.snakeyaml.Yaml yaml = new org.yaml.snakeyaml.Yaml();
             this.map = yaml.loadAs(in, Map.class);
         } finally {
-            IOUtils.closeQuietly(in);
+            if (close) {
+                IOUtils.closeQuietly(in);
+            }
         }
     }
 
