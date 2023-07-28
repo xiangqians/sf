@@ -9,15 +9,16 @@ ssh, sftp
 ```java
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.xiangqian.sf.ssh.SshType;
 import org.xiangqian.sf.ssh.Ssh;
-import org.xiangqian.sf.ssh.impl.jsch.JschCmdSshImpl;
-import org.xiangqian.sf.ssh.impl.jsch.JschShellSshImpl;
-import org.xiangqian.sf.ssh.impl.sshj.SshjCmdSshImpl;
-import org.xiangqian.sf.ssh.impl.sshj.SshjShellSshImpl;
 
 import java.io.InputStream;
 import java.time.Duration;
 
+/**
+ * @author xiangqian
+ * @date 21:03 2023/07/28
+ */
 @Slf4j
 public class HelloWorld {
 
@@ -34,16 +35,10 @@ public class HelloWorld {
             // 密码
             String passwd = "passwd";
             // 连接超时时间
-            Duration timeout = Duration.ofSeconds(10);
+            Duration timeout = Duration.ofSeconds(30);
 
-            // JSch执行单行命令实现类
-            ssh = new JschCmdSshImpl(host, port, user, passwd, timeout);
-            // JSch执行shell实现类
-//            ssh = new JschShellSshImpl(host, port, user, passwd, timeout);
-            // SSHJ执行单行命令实现类
-//            ssh = new SshjCmdSshImpl(host, port, user, passwd, timeout);
-            // SSHJ执行shell实现类
-//            ssh = new SshjShellSshImpl(host, port, user, passwd, timeout);
+            // 获取ssh实例
+            ssh = SshFactory.get(SshType.JSCH_CMD, host, port, user, passwd, timeout);
 
             // 执行命令
             in = ssh.exec("ls -l", Duration.ofSeconds(10));
