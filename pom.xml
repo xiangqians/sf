@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -63,9 +62,27 @@
 
         <!-- sshj -->
         <sshj.version>0.35.0</sshj.version>
+
+        <!-- sshd -->
+        <sshd.version>2.10.0</sshd.version>
+
     </properties>
 
     <dependencies>
+        <!-- @sshd依赖::start -->
+        <!-- sshd-sftp -->
+        <dependency>
+            <groupId>org.apache.sshd</groupId>
+            <artifactId>sshd-sftp</artifactId>
+            <version>${sshd.version}</version>
+        </dependency>
+        <!-- sshd-core -->
+        <dependency>
+            <groupId>org.apache.sshd</groupId>
+            <artifactId>sshd-core</artifactId>
+            <version>${sshd.version}</version>
+        </dependency>
+        <!-- @sshd依赖::end -->
 
         <!-- sshj -->
         <dependency>
@@ -88,7 +105,7 @@
             <version>${snakeyaml.version}</version>
         </dependency>
 
-        <!-- apache commons -->
+        <!-- @apache commons依赖::start -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -104,6 +121,7 @@
             <artifactId>commons-lang3</artifactId>
             <version>${apache-commons-lang.version}</version>
         </dependency>
+        <!-- @apache commons依赖::end -->
 
         <!-- junit -->
         <dependency>
@@ -121,6 +139,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- @logger依赖::start -->
         <!-- slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -139,6 +158,7 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <!-- @logger依赖::end -->
 
     </dependencies>
 

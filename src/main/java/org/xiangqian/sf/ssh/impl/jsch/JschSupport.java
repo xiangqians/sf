@@ -14,6 +14,7 @@ import java.util.Objects;
 /**
  * JSch
  * http://www.jcraft.com/jsch/
+ * http://www.jcraft.com/jsch/examples/
  * https://github.com/is/jsch
  * <p>
  * 第三方JSch（第三方维护的版本）

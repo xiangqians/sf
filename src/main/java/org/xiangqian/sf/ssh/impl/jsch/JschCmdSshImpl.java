@@ -37,6 +37,7 @@ public class JschCmdSshImpl extends JschSupport implements Ssh {
             // ChannelExec执行单行命令
             channel = (ChannelExec) openChannel(ChannelType.EXEC);
             channel.setErrStream(System.err);
+//            channel.setOutputStream(System.out);
 
             // 获取输入流
             in = channel.getInputStream();
