@@ -3,6 +3,7 @@ package org.xiangqian.sf.ssh.impl.jsch;
 import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSchException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.NotImplementedException;
 import org.xiangqian.sf.ssh.Ssh;
 
 import java.io.InputStream;
@@ -19,7 +20,7 @@ public class JschShellSshImpl extends JschSupport implements Ssh {
 
     public JschShellSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         super(host, port, user, passwd, timeout);
-        throw new UnsupportedOperationException();
+        throw new NotImplementedException();
     }
 
     @Override

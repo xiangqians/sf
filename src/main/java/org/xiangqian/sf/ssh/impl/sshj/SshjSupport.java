@@ -5,6 +5,7 @@ import net.schmizz.sshj.common.IOUtils;
 import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.sftp.SFTPClient;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -70,7 +71,7 @@ public abstract class SshjSupport<T extends Closeable> implements Closeable {
         }
         // un
         else {
-            throw new UnsupportedOperationException();
+            throw new NotImplementedException();
         }
     }
 

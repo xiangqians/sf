@@ -20,7 +20,7 @@ public class SshTest extends AbsTest {
         Ssh ssh = null;
         InputStream in = null;
         try {
-            ssh = getSsh(SshType.SSHJ_CMD);
+            ssh = getSsh(SshType.SSHD);
             in = ssh.exec("ls -l", Duration.ofSeconds(10));
             log.debug("\n{}", in);
             System.gc();

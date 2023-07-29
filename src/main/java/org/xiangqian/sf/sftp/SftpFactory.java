@@ -1,5 +1,6 @@
 package org.xiangqian.sf.sftp;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.xiangqian.sf.sftp.impl.jsch.JschSftpImpl;
 import org.xiangqian.sf.sftp.impl.sshj.SshjSftpImpl;
 
@@ -22,7 +23,7 @@ public class SftpFactory {
                 return new SshjSftpImpl(host, port, user, passwd, timeout);
 
             default:
-                throw new UnsupportedOperationException();
+                throw new NotImplementedException(type.name());
         }
     }
 

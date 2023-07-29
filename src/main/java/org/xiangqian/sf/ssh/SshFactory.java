@@ -1,5 +1,6 @@
 package org.xiangqian.sf.ssh;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.xiangqian.sf.ssh.impl.jsch.JschCmdSshImpl;
 import org.xiangqian.sf.ssh.impl.jsch.JschShellSshImpl;
 import org.xiangqian.sf.ssh.impl.sshj.SshjCmdSshImpl;
@@ -30,7 +31,7 @@ public class SshFactory {
                 return new SshjShellSshImpl(host, port, user, passwd, timeout);
 
             default:
-                throw new UnsupportedOperationException();
+                throw new NotImplementedException(type.name());
         }
     }
 

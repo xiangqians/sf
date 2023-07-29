@@ -7,6 +7,9 @@ package org.xiangqian.sf.ssh;
 public enum SshType {
     JSCH_CMD,
     JSCH_SHELL,
+
     SSHJ_CMD,
     SSHJ_SHELL,
+
+    SSHD,
 }
