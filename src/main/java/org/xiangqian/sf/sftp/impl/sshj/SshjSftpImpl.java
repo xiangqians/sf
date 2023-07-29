@@ -8,6 +8,7 @@ import net.schmizz.sshj.sftp.SFTPClient;
 import org.xiangqian.sf.sftp.FileEntry;
 import org.xiangqian.sf.sftp.Sftp;
 import org.xiangqian.sf.ssh.impl.sshj.SshjSupport;
+import org.xiangqian.sf.util.NoGenericException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SshjSftpImpl extends SshjSupport<SFTPClient> implements Sftp {
 
-    public SshjSftpImpl(String host, int port, String user, String passwd, Duration timeout) throws IOException {
+    public SshjSftpImpl(String host, int port, String user, String passwd, Duration timeout) throws NoGenericException, IOException {
         super(host, port, user, passwd, timeout);
     }
 

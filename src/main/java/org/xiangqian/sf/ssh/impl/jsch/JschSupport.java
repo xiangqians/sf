@@ -59,8 +59,11 @@ public abstract class JschSupport implements Closeable {
     @Override
     public void close() throws IOException {
         if (Objects.nonNull(session)) {
-            session.disconnect();
-            session = null;
+            try {
+                session.disconnect();
+            } finally {
+                session = null;
+            }
         }
     }
 

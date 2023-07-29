@@ -20,7 +20,6 @@ public class JschShellSshImpl extends JschSupport implements Ssh {
 
     public JschShellSshImpl(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         super(host, port, user, passwd, timeout);
-        throw new NotImplementedException();
     }
 
     @Override
@@ -28,7 +27,7 @@ public class JschShellSshImpl extends JschSupport implements Ssh {
         // ChannelShell执行命令（可执行多行命令）
         ChannelShell channel = (ChannelShell) openChannel(ChannelType.SHELL);
 
-        return null;
+        throw new NotImplementedException();
     }
 
 }

@@ -6,12 +6,14 @@ import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.sftp.SFTPClient;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 import org.apache.commons.lang3.NotImplementedException;
+import org.xiangqian.sf.util.NoGenericException;
+import org.xiangqian.sf.util.ReflectionUtil;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.Duration;
+import java.util.Objects;
 
 /**
  * SSHJ
@@ -35,12 +37,8 @@ public abstract class SshjSupport<T extends Closeable> implements Closeable {
      * @param passwd  密码
      * @param timeout 连接超时时间
      */
-    protected SshjSupport(String host, int port, String user, String passwd, Duration timeout) throws IOException {
-        Type genericSuperclass = this.getClass().getGenericSuperclass();
-        ParameterizedType parameterizedType = (ParameterizedType) genericSuperclass;
-        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-        Type type = actualTypeArguments[0];
-//        System.out.println(type);
+    protected SshjSupport(String host, int port, String user, String passwd, Duration timeout) throws NoGenericException, IOException {
+        Type type = ReflectionUtil.getSuperClassGenericType(this.getClass(), 0);
 
         // ssh
         if (type == SSHClient.class) {
@@ -69,7 +67,7 @@ public abstract class SshjSupport<T extends Closeable> implements Closeable {
             SFTPClient sftpClient = sshClient.newSFTPClient();
             client = (T) sftpClient;
         }
-        // un
+        // not implemented
         else {
             throw new NotImplementedException();
         }
@@ -77,7 +75,15 @@ public abstract class SshjSupport<T extends Closeable> implements Closeable {
 
     @Override
     public void close() throws IOException {
-        IOUtils.closeQuietly(session, client);
+        if (Objects.nonNull(session)) {
+            IOUtils.closeQuietly(session);
+            session = null;
+        }
+
+        if (Objects.nonNull(client)) {
+            IOUtils.closeQuietly(client);
+            client = null;
+        }
     }
 
 }
