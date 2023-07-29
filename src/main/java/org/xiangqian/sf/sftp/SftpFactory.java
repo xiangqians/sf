@@ -2,6 +2,7 @@ package org.xiangqian.sf.sftp;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.xiangqian.sf.sftp.impl.jsch.JschSftpImpl;
+import org.xiangqian.sf.sftp.impl.sshd.SshdSftpImpl;
 import org.xiangqian.sf.sftp.impl.sshj.SshjSftpImpl;
 
 import java.time.Duration;
@@ -21,6 +22,9 @@ public class SftpFactory {
 
             case SSHJ:
                 return new SshjSftpImpl(host, port, user, passwd, timeout);
+
+            case SSHD:
+                return new SshdSftpImpl(host, port, user, passwd, timeout);
 
             default:
                 throw new NotImplementedException(type.name());

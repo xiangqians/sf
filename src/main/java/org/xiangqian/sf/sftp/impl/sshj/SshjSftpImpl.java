@@ -5,6 +5,7 @@ import net.schmizz.sshj.sftp.FileAttributes;
 import net.schmizz.sshj.sftp.FileMode;
 import net.schmizz.sshj.sftp.RemoteResourceInfo;
 import net.schmizz.sshj.sftp.SFTPClient;
+import org.apache.commons.lang3.NotImplementedException;
 import org.xiangqian.sf.sftp.FileEntry;
 import org.xiangqian.sf.sftp.Sftp;
 import org.xiangqian.sf.ssh.impl.sshj.SshjSupport;
@@ -53,37 +54,37 @@ public class SshjSftpImpl extends SshjSupport<SFTPClient> implements Sftp {
 
     @Override
     public void cd(String path, Duration timeout) throws Exception {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void mkdir(String path, Duration timeout) throws Exception {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public void rm(String path, Duration timeout) throws Exception {
-
+        throw new NotImplementedException();
     }
 
     @Override
     public InputStream put(String src, String dst, Duration timeout) throws Exception {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
     public InputStream put(InputStream src, String dst, Duration timeout) throws Exception {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
     public InputStream get(String src, String dst, Duration timeout) throws Exception {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
     public InputStream get(String src, OutputStream dst, Duration timeout) throws Exception {
-        return null;
+        throw new NotImplementedException();
     }
 
 }

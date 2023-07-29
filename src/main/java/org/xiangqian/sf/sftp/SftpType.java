@@ -7,4 +7,5 @@ package org.xiangqian.sf.sftp;
 public enum SftpType {
     JSCH,
     SSHJ,
+    SSHD,
 }

@@ -80,7 +80,7 @@ public class SftpTest extends AbsTest {
     public void ls() throws Exception {
         Sftp sftp = null;
         try {
-            sftp = getSftp(SftpType.SSHJ);
+            sftp = getSftp(SftpType.SSHD);
             ls(sftp);
         } finally {
             IOUtils.closeQuietly(sftp);
