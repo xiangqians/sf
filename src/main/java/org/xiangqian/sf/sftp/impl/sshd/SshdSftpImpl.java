@@ -1,5 +1,6 @@
 package org.xiangqian.sf.sftp.impl.sshd;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.sshd.sftp.client.SftpClient;
 import org.xiangqian.sf.sftp.FileEntry;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author xiangqian
  * @date 17:39 2023/07/29
  */
+@Slf4j
 public class SshdSftpImpl extends SshdSupport<SftpClient> implements Sftp {
 
     public SshdSftpImpl(String host, int port, String user, String passwd, Duration timeout) throws NoGenericException, IOException {
@@ -25,6 +27,8 @@ public class SshdSftpImpl extends SshdSupport<SftpClient> implements Sftp {
 
     @Override
     public List<FileEntry> ls(String path, Duration timeout) throws Exception {
+        SftpClient.Attributes attributes = client.lstat(path);
+        log.debug("{}", attributes);
         throw new NotImplementedException();
     }
 

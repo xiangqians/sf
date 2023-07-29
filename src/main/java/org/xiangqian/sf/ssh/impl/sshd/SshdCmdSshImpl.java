@@ -42,7 +42,10 @@ public class SshdCmdSshImpl extends SshdSupport<SshClient> implements Ssh {
         Assert.isTrue(channel.open().verify(timeout).isOpened(), "open failed");
         channel.waitFor(List.of(ClientChannelEvent.CLOSED), timeout);
         log.debug("\n{}", out);
+
+        channel.close();
 //        return CleanableInputStream.create(null, channel::close);
+        
         return null;
     }
 

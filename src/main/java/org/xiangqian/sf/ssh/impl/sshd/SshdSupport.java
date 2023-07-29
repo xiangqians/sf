@@ -1,11 +1,12 @@
 package org.xiangqian.sf.ssh.impl.sshd;
 
 import lombok.extern.slf4j.Slf4j;
-import net.schmizz.sshj.common.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
 import org.apache.sshd.sftp.client.SftpClient;
+import org.apache.sshd.sftp.client.SftpClientFactory;
 import org.xiangqian.sf.util.Assert;
 import org.xiangqian.sf.util.NoGenericException;
 import org.xiangqian.sf.util.ReflectionUtil;
@@ -41,29 +42,43 @@ public abstract class SshdSupport<T extends Closeable> implements Closeable {
      */
     protected SshdSupport(String host, int port, String user, String passwd, Duration timeout) throws NoGenericException, IOException {
         Type type = ReflectionUtil.getSuperClassGenericType(this.getClass(), 0);
-        // ssh
-        if (type == SshClient.class) {
-            SshClient sshClient = SshClient.setUpDefaultClient();
+        SshClient sshClient = null;
+        try {
+            // ssh client
+            sshClient = SshClient.setUpDefaultClient();
             sshClient.start();
-            client = (T) sshClient;
-            session = sshClient.connect(user, host, port).verify(timeout).getSession();
 
+            // session
+            session = sshClient.connect(user, host, port).verify(timeout).getSession();
             // password authentication
             session.addPasswordIdentity(passwd);
-
             // public key authentication
-//            session.addPublicKeyIdentity();
-        }
-        // sftp
-        else if (type == SftpClient.class) {
+//        session.addPublicKeyIdentity();
 
-        }
-        // not implemented
-        else {
-            throw new NotImplementedException();
-        }
+            Assert.isTrue(session.auth().verify(timeout).isSuccess(), "auth failed");
 
-        Assert.isTrue(session.auth().verify(timeout).isSuccess(), "authorization failed");
+            // ssh
+            if (type == SshClient.class) {
+                client = (T) sshClient;
+            }
+            // sftp
+            else if (type == SftpClient.class) {
+                SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
+                client = (T) sftpClient;
+            }
+            // not implemented
+            else {
+                throw new NotImplementedException();
+            }
+        } catch (Exception e) {
+            if (Objects.nonNull(sshClient)) {
+                try {
+                    sshClient.stop();
+                } finally {
+                    IOUtils.closeQuietly(sshClient);
+                }
+            }
+        }
     }
 
     @Override
