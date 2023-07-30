@@ -8,4 +8,5 @@ public enum SftpType {
     JSCH,
     SSHJ,
     SSHD,
+    VFS,
 }

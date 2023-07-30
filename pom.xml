@@ -66,9 +66,20 @@
         <!-- sshd -->
         <sshd.version>2.10.0</sshd.version>
 
+        <!-- commons vfs -->
+        <commons-vfs.version>2.9.0</commons-vfs.version>
+
     </properties>
 
     <dependencies>
+
+        <!-- commons vfs -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-vfs2</artifactId>
+            <version>${commons-vfs.version}</version>
+        </dependency>
+
         <!-- @sshd依赖::start -->
         <!-- sshd-sftp -->
         <dependency>
