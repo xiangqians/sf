@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.xiangqian.sf.AbsTest;
 import org.xiangqian.sf.ssh.Server;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class SftpTest extends AbsTest {
         Sftp sftp = null;
         try {
             sftp = getSftp(SftpType.VFS);
-            ls(sftp);
+            ls(sftp, "/home/xiangqian");
         } finally {
             IOUtils.closeQuietly(sftp);
         }
@@ -104,7 +105,15 @@ public class SftpTest extends AbsTest {
         String user = server.getUser();
         String passwd = server.getPasswd();
         Duration timeout = server.getTimeout();
-        Sftp sftp = SftpFactory.get(type, host, port, user, passwd, timeout);
+
+        Sftp sftp = null;
+        if (type == SftpType.VFS) {
+            File knownHosts = new File("E:\\cygwin64\\home\\xiangqian\\.ssh\\known_hosts");
+            sftp = SftpFactory.get(type, host, port, user, passwd, knownHosts, timeout);
+        } else {
+            sftp = SftpFactory.get(type, host, port, user, passwd, timeout);
+        }
+
         log.debug("sftp impl: {}", sftp.getClass());
         return sftp;
     }
