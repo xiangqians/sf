@@ -50,10 +50,10 @@ public abstract class SshjSupport<T extends Closeable> implements Closeable {
 
             sshClient.connect(host, port);
 
-            // only for password authentication
+            // password authentication
             sshClient.authPassword(user, passwd);
             // OR
-            // only for public key authentication
+            // public key authentication
 //            sshClient.authPublickey("user", "location to private key file");
 
             client = (T) sshClient;

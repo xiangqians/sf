@@ -42,7 +42,7 @@ public abstract class JschSupport implements Closeable {
         // 支持服务器身份验证，设置 known_host 文件位置
 //        jsch.setKnownHosts();
 
-        // only for public key authentication
+        // public key authentication
 //        jsch.addIdentity("location to private key file");
 
         // 设置服务器地址、端口、用户名、密码

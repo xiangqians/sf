@@ -16,8 +16,4 @@ public enum SshType {
     // sshd
     SSHD_CMD,
     SSHD_SHELL,
-
-    // commons vfs
-    VFS_CMD,
-    VFS_SHELL,
 }
