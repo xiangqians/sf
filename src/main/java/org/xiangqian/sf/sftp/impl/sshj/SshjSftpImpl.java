@@ -69,22 +69,26 @@ public class SshjSftpImpl extends SshjSupport<SFTPClient> implements Sftp {
 
     @Override
     public InputStream put(String src, String dst, Duration timeout) throws Exception {
-        throw new NotImplementedException();
+        client.put(src, dst);
+        return null;
     }
 
     @Override
     public InputStream put(InputStream src, String dst, Duration timeout) throws Exception {
-        throw new NotImplementedException();
+        client.put(new InLocalSourceFile(src), dst);
+        return null;
     }
 
     @Override
     public InputStream get(String src, String dst, Duration timeout) throws Exception {
-        throw new NotImplementedException();
+        client.get(src, dst);
+        return null;
     }
 
     @Override
     public InputStream get(String src, OutputStream dst, Duration timeout) throws Exception {
-        throw new NotImplementedException();
+        client.get(src, new OutLocalDestFile(dst));
+        return null;
     }
 
 }

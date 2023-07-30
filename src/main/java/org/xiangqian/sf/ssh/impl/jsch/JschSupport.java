@@ -39,10 +39,16 @@ public abstract class JschSupport implements Closeable {
     protected JschSupport(String host, int port, String user, String passwd, Duration timeout) throws JSchException {
         JSch jsch = new JSch();
 
+        // 支持服务器身份验证，设置 known_host 文件位置
+//        jsch.setKnownHosts();
+
+        // only for public key authentication
+//        jsch.addIdentity("location to private key file");
+
         // 设置服务器地址、端口、用户名、密码
         session = jsch.getSession(user, host, port);
+        // password authentication
         session.setPassword(passwd);
-
         // 跳过公钥检测
         session.setConfig("StrictHostKeyChecking", "no");
 

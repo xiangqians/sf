@@ -44,6 +44,10 @@ public abstract class SshjSupport<T extends Closeable> implements Closeable {
         if (type == SSHClient.class) {
             SSHClient sshClient = new SSHClient();
             sshClient.addHostKeyVerifier(new PromiscuousVerifier());
+
+            // 支持服务器身份验证，设置 known_host 文件位置
+//            sshClient.loadKnownHosts();
+
             sshClient.connect(host, port);
 
             // only for password authentication

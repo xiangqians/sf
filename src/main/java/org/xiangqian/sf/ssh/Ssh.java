@@ -17,7 +17,7 @@ public interface Ssh extends Closeable {
      *
      * @param cmd     命令
      * @param timeout 执行命令超时时间
-     * @return {@link InputStream}
+     * @return 执行结果stream
      * @throws Exception
      */
     InputStream exec(String cmd, Duration timeout) throws Exception;

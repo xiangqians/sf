@@ -20,6 +20,7 @@ import java.util.Objects;
 /**
  * Apache MINA SSHD
  * https://mina.apache.org/sshd-project/documentation.html
+ * https://mina.apache.org/downloads-sshd.html
  * https://github.com/apache/mina-sshd
  *
  * @author xiangqian

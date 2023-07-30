@@ -19,7 +19,7 @@ public interface Sftp extends Closeable {
      *
      * @param path
      * @param timeout 执行命令超时时间
-     * @return
+     * @return 命令执行结果
      * @throws Exception
      */
     List<FileEntry> ls(String path, Duration timeout) throws Exception;
@@ -57,7 +57,7 @@ public interface Sftp extends Closeable {
      * @param src     本地源文件
      * @param dst     远程服务器目标文件
      * @param timeout 执行命令超时时间
-     * @return
+     * @return 执行命令stream
      * @throws Exception
      */
     InputStream put(String src, String dst, Duration timeout) throws Exception;
@@ -68,7 +68,7 @@ public interface Sftp extends Closeable {
      * @param src     本地源输入流
      * @param dst     远程服务器目标文件
      * @param timeout 执行命令超时时间
-     * @return
+     * @return 执行命令stream
      * @throws Exception
      */
     InputStream put(InputStream src, String dst, Duration timeout) throws Exception;
@@ -79,7 +79,7 @@ public interface Sftp extends Closeable {
      * @param src     远程服务器源文件
      * @param dst     本地目标文件
      * @param timeout 执行命令超时时间
-     * @return
+     * @return 执行命令stream
      * @throws Exception
      */
     InputStream get(String src, String dst, Duration timeout) throws Exception;
@@ -90,7 +90,7 @@ public interface Sftp extends Closeable {
      * @param src     远程服务器源文件
      * @param dst     本地目标输出流
      * @param timeout 执行命令超时时间
-     * @return
+     * @return 执行命令stream
      * @throws Exception
      */
     InputStream get(String src, OutputStream dst, Duration timeout) throws Exception;

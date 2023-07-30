@@ -1,6 +1,12 @@
 # SF
 
-ssh, sftp
+ssh, sftp 工具
+
+依赖库：
+
+- [JSch](https://github.com/is/jsch)
+- [SSHJ](https://github.com/hierynomus/sshj)
+- [SSHD](https://github.com/apache/mina-sshd)
 
 # 示例
 
