@@ -17,11 +17,6 @@ import java.util.List;
 @Slf4j
 public class SftpTest extends AbsTest {
 
-    public static void main(String[] args) throws Exception {
-//        put();
-        get();
-    }
-
     public static void get() throws Exception {
         Sftp sftp = null;
         try {
@@ -35,16 +30,32 @@ public class SftpTest extends AbsTest {
         }
     }
 
-    public static void put() throws Exception {
+    @Test
+    public void put() throws Exception {
         Sftp sftp = null;
         try {
             sftp = getSftp(SftpType.SSHJ);
-            sftp.cd("./tmp", Duration.ofSeconds(10));
-            ls(sftp);
+//            sftp.cd("./tmp", Duration.ofSeconds(10));
+//            ls(sftp);
 
 //            sftp.put("E:\\tmp\\TeamViewer.zip", "./", Duration.ofSeconds(10));
             sftp.put("C:\\Users\\xiangqian\\Desktop\\tmp\\apache-skywalking-apm-bin.zip", "./", Duration.ofSeconds(10));
             ls(sftp);
+        } finally {
+            IOUtils.closeQuietly(sftp);
+        }
+    }
+
+    @Test
+    public void putVfs() throws Exception {
+        Sftp sftp = null;
+        try {
+            sftp = getSftp(SftpType.VFS);
+            String dst = "/home/xiangqian/tmp";
+            ls(sftp, dst);
+
+            sftp.put("C:\\Users\\xiangqian\\Desktop\\tmp\\apache-maven-3.0.5-bin.tar.gz", "/home/xiangqian/tmp/test", Duration.ofSeconds(10));
+            ls(sftp, dst);
         } finally {
             IOUtils.closeQuietly(sftp);
         }

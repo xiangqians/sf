@@ -2,8 +2,10 @@ package org.xiangqian.sf.sftp.impl.vfs;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.vfs2.AllFileSelector;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
+import org.apache.commons.vfs2.provider.local.LocalFile;
 import org.xiangqian.sf.sftp.FileEntry;
 import org.xiangqian.sf.sftp.Sftp;
 
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
  * @author xiangqian
  * @date 16:42 2023/07/30
  */
+@Deprecated
 public class VfsSftpImpl extends VfsSupport implements Sftp {
 
     public VfsSftpImpl(String host, int port, String user, String passwd, File privateKey, File knownHosts, Duration timeout) throws FileSystemException {
@@ -60,37 +63,51 @@ public class VfsSftpImpl extends VfsSupport implements Sftp {
 
     @Override
     public void cd(String path, Duration timeout) throws Exception {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void mkdir(String path, Duration timeout) throws Exception {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void rm(String path, Duration timeout) throws Exception {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public InputStream put(String src, String dst, Duration timeout) throws Exception {
+        LocalFile localFile = (LocalFile) fileSystemManager.resolveFile(src);
+        FileObject fo = fileObject.resolveFile(dst);
+        try {
+            fo.copyFrom(localFile, new AllFileSelector());
+        } finally {
+            IOUtils.closeQuietly(fo, localFile);
+        }
         return null;
     }
 
     @Override
     public InputStream put(InputStream src, String dst, Duration timeout) throws Exception {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public InputStream get(String src, String dst, Duration timeout) throws Exception {
+        LocalFile localFile = (LocalFile) fileSystemManager.resolveFile(src);
+        FileObject fo = fileObject.resolveFile(dst);
+        try {
+            localFile.copyFrom(fo, new AllFileSelector());
+        } finally {
+            IOUtils.closeQuietly(fo, localFile);
+        }
         return null;
     }
 
     @Override
     public InputStream get(String src, OutputStream dst, Duration timeout) throws Exception {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
 }
